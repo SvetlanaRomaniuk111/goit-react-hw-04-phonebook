@@ -16,18 +16,12 @@ const App = () => {
     filteredContact: null,
   });
 
-  // const getLocalStorage = () => {
-  //   return JSON.parse(localStorage.getItem('state'));
-  // };
-  // const setLocalStorage = state => {
-  //   localStorage.setItem('state', JSON.stringify(state));
-  // };
-
   useEffect(() => {
     if (!JSON.parse(localStorage.getItem('state'))) {
       localStorage.setItem('state', JSON.stringify(state));
     }
     setState(JSON.parse(localStorage.getItem('state')));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
