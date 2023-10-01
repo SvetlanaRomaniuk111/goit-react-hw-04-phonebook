@@ -2,17 +2,27 @@ import { useState } from 'react';
 import css from './CreateContact.module.css';
 
 const FormCreateContact = props => {
-  const [state, setState] = useState({ name: '', number: '', isValid: true });
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+  const [isValid, setIsValid] = useState(true);
 
-  const handleChange = ({ target: { value, name } }) => {
-    setState({ ...state, [name]: value });
+  // const [state, setState] = useState({ name: '', number: '', isValid: true });
+
+  const handleChangeName = ({ target: { value } }) => {
+    setName(value);
+  };
+
+  const handleChangeNumber = ({ target: { value } }) => {
+    setNumber(value);
   };
 
   const handleSubmit = e => {
     e.preventDefault();
-    if (!state.name || !state.number) return setState({ isValid: false });
-    props.createContact(state);
-    setState({ name: '', number: '', isValid: true });
+    if (!name || !number) return setIsValid(false);
+    props.createContact({ name, number, isValid });
+    setName('');
+    setNumber('');
+    setIsValid(true);
   };
 
   return (
@@ -24,9 +34,9 @@ const FormCreateContact = props => {
         <input
           type="text"
           name="name"
-          value={state.name}
-          onChange={handleChange}
-          className={`${css.form_control} ${!state.isValid && 'is-invalid'}`}
+          value={name}
+          onChange={handleChangeName}
+          className={`${css.form_control} ${!isValid && 'is-invalid'}`}
           id="inputName"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
@@ -40,10 +50,10 @@ const FormCreateContact = props => {
         <input
           type="tel"
           name="number"
-          onChange={handleChange}
-          className={`${css.form_control} ${!state.isValid && 'is-invalid'}`}
+          onChange={handleChangeNumber}
+          className={`${css.form_control} ${!isValid && 'is-invalid'}`}
           id="inputNumber"
-          value={state.number}
+          value={number}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
