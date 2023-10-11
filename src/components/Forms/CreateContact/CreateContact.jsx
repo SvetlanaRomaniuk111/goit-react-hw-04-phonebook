@@ -6,14 +6,9 @@ const FormCreateContact = props => {
   const [number, setNumber] = useState('');
   const [isValid, setIsValid] = useState(true);
 
-  // const [state, setState] = useState({ name: '', number: '', isValid: true });
-
-  const handleChangeName = ({ target: { value } }) => {
-    setName(value);
-  };
-
-  const handleChangeNumber = ({ target: { value } }) => {
-    setNumber(value);
+  const handleChange = ({ target: { value, name } }) => {
+    if (name === 'name') setName(value);
+    else setNumber(value);
   };
 
   const handleSubmit = e => {
@@ -35,7 +30,7 @@ const FormCreateContact = props => {
           type="text"
           name="name"
           value={name}
-          onChange={handleChangeName}
+          onChange={handleChange}
           className={`${css.form_control} ${!isValid && 'is-invalid'}`}
           id="inputName"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -50,7 +45,7 @@ const FormCreateContact = props => {
         <input
           type="tel"
           name="number"
-          onChange={handleChangeNumber}
+          onChange={handleChange}
           className={`${css.form_control} ${!isValid && 'is-invalid'}`}
           id="inputNumber"
           value={number}
